@@ -69,53 +69,75 @@ function draw(){
  ctx.restore();ctx.beginPath();ctx.arc(cx,cy,r-7,0,TAU);ctx.strokeStyle='#d5a45c';ctx.lineWidth=18;ctx.shadowColor='#ff3b0b';ctx.shadowBlur=12;ctx.stroke();ctx.shadowBlur=0;ctx.beginPath();ctx.arc(cx,cy,105,0,TAU);ctx.strokeStyle='#d6a65f';ctx.lineWidth=11;ctx.stroke();
 }
 
-// One continuous, rotating crown of fire wrapped around the wheel.
+// A single continuous inferno: turbulent fire tongues erupt from the rim all the way around.
 const fireCanvas=document.getElementById('fire'),fireCtx=fireCanvas.getContext('2d');
-let fireAngle=0,fireTime=0;
-function flameRadius(a,layer){
- const wave=Math.sin(a*7+fireTime*1.8)*9+
-             Math.sin(a*13-fireTime*2.5)*6+
-             Math.sin(a*3+fireTime*.9)*5;
- const tongues=Math.pow(Math.max(0,Math.sin(a*11-fireTime*2.1)),5)*layer;
- return 454+wave+tongues;
+let fireTime=0;
+const TAU_FIRE=Math.PI*2;
+const flameSeeds=Array.from({length:58},(_,i)=>({
+ angle:i/58*TAU_FIRE+(Math.random()-.5)*.075,
+ height:58+Math.random()*74,
+ width:.035+Math.random()*.045,
+ speed:.7+Math.random()*1.4,
+ phase:Math.random()*TAU_FIRE
+}));
+function flamePoint(a,r){return {x:500+Math.cos(a)*r,y:500+Math.sin(a)*r};}
+function drawTongue(seed,index,layer){
+ const flicker=.72+.28*Math.sin(fireTime*seed.speed+seed.phase);
+ const sway=Math.sin(fireTime*(1.1+seed.speed*.25)+seed.phase)*.025;
+ const h=seed.height*flicker*layer;
+ const a=seed.angle+sway;
+ const base=flamePoint(a,438);
+ const left=flamePoint(a-seed.width,445);
+ const right=flamePoint(a+seed.width,445);
+ const tip=flamePoint(a+Math.sin(fireTime*seed.speed+seed.phase)*.018,455+h);
+ const lobeL=flamePoint(a-seed.width*.48,455+h*.58);
+ const lobeR=flamePoint(a+seed.width*.48,455+h*.62);
+ const grad=fireCtx.createRadialGradient(tip.x,tip.y,1,base.x,base.y,h+42);
+ grad.addColorStop(0,layer>1?'rgba(255,235,105,.72)':'rgba(255,245,160,.95)');
+ grad.addColorStop(.28,'rgba(255,174,31,.96)');
+ grad.addColorStop(.68,'rgba(255,73,8,.9)');
+ grad.addColorStop(1,'rgba(155,13,0,0)');
+ fireCtx.beginPath();fireCtx.moveTo(left.x,left.y);
+ fireCtx.quadraticCurveTo(lobeL.x,lobeL.y,tip.x,tip.y);
+ fireCtx.quadraticCurveTo(lobeR.x,lobeR.y,right.x,right.y);
+ fireCtx.closePath();fireCtx.fillStyle=grad;
+ fireCtx.shadowColor=layer>1?'#ff6a0a':'#ff3100';fireCtx.shadowBlur=layer>1?23:34;fireCtx.fill();
 }
-function flameBand(inner,outer,phase,alpha){
+function drawFireRing(inner,outer,phase,fillStyle,alpha){
  fireCtx.save();fireCtx.globalAlpha=alpha;fireCtx.beginPath();
- for(let i=0;i<=240;i++){
-  const a=i/240*TAU+phase,r=flameRadius(a,outer);
-  const x=500+Math.cos(a)*r,y=500+Math.sin(a)*r;
-  if(i===0)fireCtx.moveTo(x,y);else fireCtx.lineTo(x,y);
+ for(let i=0;i<=300;i++){
+  const a=i/300*TAU_FIRE+phase;
+  const r=outer+Math.sin(a*9+fireTime*2)*5+Math.sin(a*17-fireTime*2.8)*3;
+  const p=flamePoint(a,r);if(i===0)fireCtx.moveTo(p.x,p.y);else fireCtx.lineTo(p.x,p.y);
  }
- for(let i=240;i>=0;i--){
-  const a=i/240*TAU+phase,r=flameRadius(a,inner);
-  fireCtx.lineTo(500+Math.cos(a)*r,500+Math.sin(a)*r);
- }
- fireCtx.closePath();fireCtx.fill();fireCtx.restore();
+ for(let i=300;i>=0;i--){const a=i/300*TAU_FIRE+phase;const p=flamePoint(a,inner+Math.sin(a*8-fireTime*1.7)*3);fireCtx.lineTo(p.x,p.y);}
+ fireCtx.closePath();fireCtx.fillStyle=fillStyle;fireCtx.shadowColor='#ff3c00';fireCtx.shadowBlur=32;fireCtx.fill();fireCtx.restore();
 }
 function animateFire(){
- fireCtx.clearRect(0,0,1000,1000);fireTime+=.035;fireAngle+=.009;
- // Broad, connected outer flame sheet that appears to travel around the rim.
- fireCtx.save();fireCtx.translate(500,500);fireCtx.rotate(fireAngle);fireCtx.translate(-500,-500);
- const outer=fireCtx.createRadialGradient(500,500,420,500,500,510);
- outer.addColorStop(0,'rgba(255,65,5,0)');outer.addColorStop(.34,'rgba(255,75,5,.28)');outer.addColorStop(.66,'rgba(255,120,12,.95)');outer.addColorStop(.84,'rgba(255,42,4,.75)');outer.addColorStop(1,'rgba(95,8,0,0)');
- fireCtx.fillStyle=outer;fireCtx.shadowColor='#ff3b05';fireCtx.shadowBlur=34;
- flameBand(425,510,0,.9);
- // Flowing orange body and bright, molten inner edge keep the ring looking like one fire.
- const body=fireCtx.createRadialGradient(500,500,425,500,500,493);
- body.addColorStop(0,'rgba(255,245,120,0)');body.addColorStop(.34,'#ffb21c');body.addColorStop(.63,'#ff5a08');body.addColorStop(1,'rgba(160,15,0,0)');
- fireCtx.fillStyle=body;fireCtx.shadowBlur=27;flameBand(432,488,.08,.96);
- const core=fireCtx.createRadialGradient(500,500,435,500,500,472);
- core.addColorStop(0,'rgba(255,255,180,0)');core.addColorStop(.48,'rgba(255,239,112,.95)');core.addColorStop(1,'rgba(255,120,12,0)');
- fireCtx.fillStyle=core;fireCtx.shadowColor='#fff06a';fireCtx.shadowBlur=17;flameBand(438,470,-.04,.85);
+ fireCtx.clearRect(0,0,1000,1000);fireTime+=.035;
+ // Build the connected burning base first, so the individual tongues merge into one eruption.
+ const base=fireCtx.createRadialGradient(500,500,426,500,500,500);
+ base.addColorStop(0,'rgba(255,239,116,0)');base.addColorStop(.23,'rgba(255,231,104,.98)');
+ base.addColorStop(.42,'rgba(255,125,15,.98)');base.addColorStop(.75,'rgba(245,47,4,.88)');base.addColorStop(1,'rgba(105,8,0,0)');
+ drawFireRing(426,492,0,base,.98);
+ // Two staggered layers create depth, heat shimmer and a real flame silhouette.
+ fireCtx.save();fireCtx.globalCompositeOperation='screen';
+ flameSeeds.forEach((seed,i)=>drawTongue(seed,i,1));
+ flameSeeds.forEach((seed,i)=>{if(i%2===0)drawTongue({...seed,angle:seed.angle+.045,height:seed.height*.72,phase:seed.phase+1.4},i,1.25)});
  fireCtx.restore();
- // A few sparks peel away from the single moving flame front.
- for(let i=0;i<13;i++){
-  const a=fireAngle*1.7+i/13*TAU+Math.sin(fireTime+i)*.12;
-  const r=492+Math.sin(fireTime*2+i*3)*13;
-  const x=500+Math.cos(a)*r,y=500+Math.sin(a)*r;
-  fireCtx.globalAlpha=.35+.55*(.5+.5*Math.sin(fireTime*4+i));
-  fireCtx.fillStyle=i%3===0?'#fff2a0':'#ff9b25';fireCtx.shadowColor='#ff4a08';fireCtx.shadowBlur=13;
-  fireCtx.beginPath();fireCtx.arc(x,y,1.5+(i%3),0,TAU);fireCtx.fill();
+ // A molten white-gold line at the wheel edge makes the fire feel intensely hot.
+ const core=fireCtx.createRadialGradient(500,500,432,500,500,468);
+ core.addColorStop(0,'rgba(255,255,180,0)');core.addColorStop(.45,'rgba(255,245,147,.95)');
+ core.addColorStop(.76,'rgba(255,156,30,.78)');core.addColorStop(1,'rgba(255,80,0,0)');
+ drawFireRing(433,466,fireTime*.012,core,.82);
+ // Sparks shoot outward from the same continuous flame front.
+ for(let i=0;i<30;i++){
+  const a=(i/30)*TAU_FIRE+fireTime*(.16+(i%4)*.018);
+  const r=492+((fireTime*21+i*37)%66);
+  const p=flamePoint(a,r);
+  fireCtx.globalAlpha=.25+.7*(.5+.5*Math.sin(fireTime*5+i));
+  fireCtx.fillStyle=i%4===0?'#fff5b2':'#ff9b28';fireCtx.shadowColor='#ff4a08';fireCtx.shadowBlur=15;
+  fireCtx.beginPath();fireCtx.arc(p.x,p.y,1.4+(i%3),0,TAU_FIRE);fireCtx.fill();
  }
  fireCtx.globalAlpha=1;fireCtx.shadowBlur=0;requestAnimationFrame(animateFire);
 }
