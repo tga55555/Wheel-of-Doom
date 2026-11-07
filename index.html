@@ -175,7 +175,7 @@ if(new URLSearchParams(window.location.search).get('live')==='1')document.body.c
 function showWheel(){if(popupShown)return;popupShown=true;document.body.classList.add('active');document.getElementById('status').textContent="FINAL MINUTE — the Wheel of Doom is spinning!";}
 function revealPendingChallenge(){
  const popup=document.getElementById('challengePopup');
- if(!pendingChallenge||!popup||!popup.hidden===false)return;
+ if(!pendingChallenge||!popup||popup.hidden===false)return;
  document.getElementById('challenge').textContent=pendingChallenge;
  document.getElementById('popupChallenge').textContent=pendingChallenge;
  // Place the overlay directly under body and lock page scrolling while it is open.
