@@ -66,7 +66,7 @@ dialog.popup .popup-card{width:min(94vw,1000px)!important;height:auto!important;
 <div class="hint">TikTok chat: type <b>!spin</b> to spin the wheel · <b>!help</b> for instructions<br>Streamer can also press the spin button.</div>
 <div class="status" id="status">Waiting for a TikTok battle to begin…</div>
 </main>
-<dialog id="challengePopup" class="popup" aria-labelledby="popupTitle"><div class="popup-card"><div class="flame-confetti" id="flameConfetti" aria-hidden="true"></div><div class="popup-skull">☠</div><div class="popup-kicker" id="popupTitle">THE WHEEL HAS SPOKEN</div><div class="popup-challenge" id="popupChallenge"></div><button type="button" id="closePopup">GOT IT</button></div></dialog>
+<div id="challengePopup" class="popup" role="dialog" aria-modal="true" aria-labelledby="popupTitle" hidden><div class="popup-card"><div class="flame-confetti" id="flameConfetti" aria-hidden="true"></div><div class="popup-skull">☠</div><div class="popup-kicker" id="popupTitle">THE WHEEL HAS SPOKEN</div><div class="popup-challenge" id="popupChallenge"></div><button type="button" id="closePopup">GOT IT</button></div></div>
 <script>
 const challenges=[
 "Talk like a pirate for 2 minutes 🏴‍☠️",
@@ -165,10 +165,10 @@ function spin(deferPopup=false){
  function frame(now){const t=Math.min(1,(now-start)/duration),ease=1-Math.pow(1-t,4);rotation=from+(to-from)*ease;draw();if(t<1)requestAnimationFrame(frame);else{rotation=((to%TAU)+TAU)%TAU;draw();pendingChallenge=challenges[index];document.getElementById('challenge').textContent=pendingChallenge;document.getElementById('popupChallenge').textContent=pendingChallenge;if(!deferPopup)revealPendingChallenge();document.getElementById('status').textContent=deferPopup?"Challenge chosen · Starts with 30 seconds remaining.":"🎉 Challenge selected · Good luck!";spinning=false;spinBtn.disabled=false}}
  requestAnimationFrame(frame);
 }
-spinBtn.addEventListener('click',spin);function closeResultOverlay(){const p=document.getElementById('challengePopup');if(p&&p.open)p.close();if(p)p.dataset.open='0';}
+spinBtn.addEventListener('click',spin);function closeResultOverlay(){const p=document.getElementById('challengePopup');if(p){p.hidden=true;p.dataset.open='0';document.body.style.overflow='';}}
 document.getElementById('closePopup').addEventListener('click',closeResultOverlay);
 document.getElementById('challengePopup').addEventListener('click',e=>{if(e.target===e.currentTarget)closeResultOverlay()});
-document.getElementById('challengePopup').addEventListener('close',()=>{document.getElementById('challengePopup').dataset.open='0'});
+
 draw();
 // Normal link opens as a visible preview; add ?live=1 for the hidden-until-battle LIVE overlay.
 if(new URLSearchParams(window.location.search).get('live')==='1')document.body.classList.add('live-mode');
@@ -186,7 +186,7 @@ function revealPendingChallenge(){
  card.style.animation='none';
  void card.offsetWidth;
  card.style.animation='';
- popup.showModal();
+ 
  burstFlameConfetti();
  document.getElementById('status').textContent="🔥 FINAL 30 SECONDS — YOUR CHALLENGE STARTS NOW!";
 }
