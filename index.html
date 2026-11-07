@@ -9,7 +9,7 @@
 *{box-sizing:border-box}body{margin:0;min-height:100vh;background:transparent;color:#fff;font:16px system-ui,sans-serif;display:grid;place-items:center;padding:16px;overflow:hidden}
 main{position:relative;isolation:isolate;width:min(100%,780px);text-align:center;padding:22px 18px 18px;border:1px solid #8c7770;border-radius:30px;background:linear-gradient(145deg,#17191c,#29221f 55%,#101820);box-shadow:0 14px 40px #000b;backdrop-filter:blur(8px);opacity:1;visibility:visible;transform:translateY(0) scale(1);transition:opacity .7s ease,transform .7s ease,visibility .7s}to{transform:translate(12px,-10px) scale(1.05)}}.live-mode main{opacity:0;visibility:hidden;transform:translateY(24px) scale(.96)}.live-mode.active main{opacity:1;visibility:visible;transform:translateY(0) scale(1)}.tag{display:block;width:max-content;max-width:100%;margin:0 auto 8px;color:#f4e8df;letter-spacing:3px;font-weight:1000;font-size:12px;padding:8px 16px;border:1px solid #8d7568;border-radius:999px;background:#27211e;text-shadow:0 2px 5px #000}.battle-tag{color:#ffd8ad;border-color:#a65c35;background:#38251c}h1{font-size:clamp(32px,8vw,64px);line-height:1;margin:12px 0;color:#fff;letter-spacing:1px;text-shadow:0 3px 0 #3a2117,0 5px 12px #000}.sub{color:#e6d9ff;margin:0 0 16px;font-weight:650}
 .wheel-wrap{width:min(78vw,470px);aspect-ratio:1;margin:34px auto 26px;position:relative;filter:drop-shadow(0 18px 28px #000)}.smoke-plume,.flame-plume{position:absolute;z-index:0;inset:-48px;border-radius:50%;pointer-events:none}.smoke-plume{background:radial-gradient(ellipse at 22% 24%,#c0c0bdcc 0 5%,transparent 27%),radial-gradient(ellipse at 76% 18%,#777b7dcc 0 9%,transparent 34%),radial-gradient(ellipse at 49% 0%,#a4a5a2cc 0 8%,transparent 32%),radial-gradient(ellipse at 92% 58%,#777b7dcc 0 8%,transparent 31%),radial-gradient(ellipse at 8% 66%,#a4a5a2cc 0 9%,transparent 33%),radial-gradient(ellipse at 54% 100%,#4c4c4ccc 0 10%,transparent 36%);filter:blur(18px);animation:smokeBillow 2.8s ease-in-out infinite alternate}.flame-plume{inset:-37px;background:radial-gradient(ellipse at 50% 100%,#fff3a0 0 2%,#ff9b20 5%,#f13b0a 12%,transparent 29%),radial-gradient(ellipse at 4% 55%,#fff0a0 0 2%,#ff9b20 5%,#e52a08 13%,transparent 30%),radial-gradient(ellipse at 96% 55%,#fff0a0 0 2%,#ff9b20 5%,#e52a08 13%,transparent 30%),radial-gradient(ellipse at 22% 5%,#ffd06a 0 3%,#fa4a0c 10%,transparent 28%),radial-gradient(ellipse at 78% 5%,#ffd06a 0 3%,#fa4a0c 10%,transparent 28%);filter:blur(7px) saturate(1.5);animation:flameFlicker .28s ease-in-out infinite alternate}.flame-plume:before,.flame-plume:after{content:"";position:absolute;inset:-8px;border-radius:50%;background:repeating-conic-gradient(from 0deg at 50% 50%,transparent 0deg 9deg,#ff4b0b99 10deg 13deg,transparent 15deg 23deg);mask:radial-gradient(circle,transparent 54%,#000 58%,#000 72%,transparent 78%);filter:blur(9px);animation:fireRotate 10s linear infinite}.flame-plume:after{background:repeating-conic-gradient(from 13deg at 50% 50%,transparent 0deg 13deg,#ffc04a99 14deg 17deg,transparent 19deg 27deg);filter:blur(5px);animation:fireRotate 7s linear infinite reverse}.@keyframes smokeBillow{from{transform:translate(-12px,12px) scale(.88);opacity:.62}to{transform:translate(13px,-20px) scale(1.18);opacity:1}}@keyframes flameFlicker{from{transform:scale(.96,.88);opacity:.8}to{transform:scale(1.08,1.13);opacity:1}}@keyframes fireRotate{to{transform:rotate(360deg)}}
-@keyframes orbit{to{transform:rotate(360deg)}}
+#fire{position:absolute;z-index:2;inset:-50px;width:calc(100% + 100px);height:calc(100% + 100px);pointer-events:none;overflow:visible}.pointer{z-index:4}.hub{z-index:3}@keyframes orbit{to{transform:rotate(360deg)}}
 canvas{position:relative;z-index:1;width:100%;height:100%;display:block;border-radius:50%}
 .pointer{position:absolute;z-index:2;top:-17px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:25px solid transparent;border-right:25px solid transparent;border-top:0;border-bottom:54px solid #fff09a;filter:drop-shadow(0 0 8px #fff09a) drop-shadow(0 4px 4px #000)}
 .hub{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:19%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 25%,#fff,#ffe28a 18%,#ff7a4d 48%,#8b164f 78%,#280b37);border:6px solid #fff1ad;box-shadow:0 3px 12px #000;pointer-events:none}
@@ -26,7 +26,7 @@ button{font:inherit;font-weight:1000;letter-spacing:1.5px;border:2px solid #ffd6
 <div class="tag battle-tag">⚠ LIVE BATTLE CHALLENGE ⚠</div>
 <h1>WHEEL OF DOOM</h1>
 <p class="sub">One spin. One challenge. No excuses.</p>
-<div class="wheel-wrap"><div class="smoke-plume"></div><div class="flame-plume"></div><div class="pointer"></div><canvas id="wheel" width="900" height="900"></canvas><div class="hub"></div></div>
+<div class="wheel-wrap"><div class="smoke-plume"></div><div class="flame-plume"></div><canvas id="fire" width="1000" height="1000" aria-hidden="true"></canvas><div class="pointer"></div><canvas id="wheel" width="900" height="900"></canvas><div class="hub"></div></div>
 <button id="spin">SPIN THE WHEEL</button>
 <section class="result" aria-live="polite"><small>YOUR DOOM IS…</small><div class="challenge" id="challenge">Waiting for the first spin…</div></section>
 <div class="hint">TikTok chat: type <b>!spin</b> to spin the wheel · <b>!help</b> for instructions<br>Streamer can also press the spin button.</div>
@@ -67,6 +67,39 @@ function draw(){
  });
  ctx.restore();ctx.beginPath();ctx.arc(cx,cy,r-7,0,TAU);ctx.strokeStyle='#d77a31';ctx.lineWidth=15;ctx.shadowColor='#ff3b0b';ctx.shadowBlur=12;ctx.stroke();ctx.shadowBlur=0;ctx.beginPath();ctx.arc(cx,cy,105,0,TAU);ctx.strokeStyle='#2a1713';ctx.lineWidth=9;ctx.stroke();
 }
+
+// A separate animated fire layer: constantly changing flame tongues, sparks and glowing embers.
+const fireCanvas=document.getElementById('fire'),fireCtx=fireCanvas.getContext('2d');
+const fireParticles=[],embers=[];
+function spawnFlame(){
+ const a=Math.random()*TAU,rad=445,life=24+Math.random()*30;
+ fireParticles.push({x:500+Math.cos(a)*rad,y:500+Math.sin(a)*rad,life,max:life,vx:(Math.random()-.5)*1.2-.15,vy:-1.8-Math.random()*3.1,w:5+Math.random()*13,h:30+Math.random()*62,phase:Math.random()*TAU});
+}
+function spawnEmber(){
+ const a=Math.random()*TAU,rad=440;
+ embers.push({x:500+Math.cos(a)*rad,y:500+Math.sin(a)*rad,vx:(Math.random()-.5)*2.8,vy:-1-Math.random()*3.5,life:25+Math.random()*45,size:1+Math.random()*3});
+}
+function animateFire(){
+ fireCtx.clearRect(0,0,1000,1000);
+ for(let k=0;k<5;k++)spawnFlame();
+ if(Math.random()<.8)spawnEmber();
+ for(let i=fireParticles.length-1;i>=0;i--){
+  const p=fireParticles[i];p.life--;p.x+=p.vx+Math.sin(p.phase+p.life*.12)*.65;p.y+=p.vy;p.w*=.987;
+  const fade=Math.min(1,p.life/12),height=p.h*(1-p.life/p.max*.35);
+  fireCtx.save();fireCtx.globalAlpha=Math.min(1,fade*.92);fireCtx.translate(p.x,p.y);fireCtx.rotate(Math.sin(p.phase+p.life*.1)*.18);
+  const g=fireCtx.createLinearGradient(0,0,0,-height);g.addColorStop(0,'#fff4a6');g.addColorStop(.18,'#ffc02f');g.addColorStop(.48,'#ff5a12');g.addColorStop(1,'rgba(135,18,5,0)');
+  fireCtx.fillStyle=g;fireCtx.shadowColor='#ff4a0a';fireCtx.shadowBlur=15;
+  fireCtx.beginPath();fireCtx.moveTo(-p.w*.55,0);fireCtx.bezierCurveTo(-p.w*1.25,-height*.25,-p.w*.28,-height*.72,0,-height);fireCtx.bezierCurveTo(p.w*.38,-height*.7,p.w*1.2,-height*.24,p.w*.55,0);fireCtx.closePath();fireCtx.fill();
+  fireCtx.restore();if(p.life<=0)fireParticles.splice(i,1);
+ }
+ for(let i=embers.length-1;i>=0;i--){
+  const e=embers[i];e.life--;e.x+=e.vx;e.y+=e.vy;e.vy-=.015;
+  fireCtx.globalAlpha=Math.min(1,e.life/12);fireCtx.fillStyle='#ffbd48';fireCtx.shadowColor='#ff5a12';fireCtx.shadowBlur=10;fireCtx.beginPath();fireCtx.arc(e.x,e.y,e.size,0,TAU);fireCtx.fill();
+  if(e.life<=0)embers.splice(i,1);
+ }
+ fireCtx.globalAlpha=1;fireCtx.shadowBlur=0;requestAnimationFrame(animateFire);
+}
+animateFire();
 function confettiBurst(){const palette=['#ff4d88','#ffe58b','#65e9f2','#a76bff','#70ffbd'];for(let i=0;i<65;i++){const bit=document.createElement('i');bit.className='confetti';bit.style.left=(Math.random()*100)+'vw';bit.style.background=palette[i%palette.length];bit.style.setProperty('--drift',(Math.random()*240-120)+'px');bit.style.animationDelay=(Math.random()*.35)+'s';document.body.appendChild(bit);setTimeout(()=>bit.remove(),2800)}}
 function spin(){
  if(spinning)return;
