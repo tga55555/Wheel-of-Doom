@@ -162,7 +162,7 @@ function spin(deferPopup=false){
  const target=((-(index+.5)*arc-current)%TAU+TAU)%TAU;
  const extra=TAU*(5+Math.floor(Math.random()*3));
  const from=rotation,to=rotation+extra+target,duration=5200,start=performance.now();
- function frame(now){const t=Math.min(1,(now-start)/duration),ease=1-Math.pow(1-t,4);rotation=from+(to-from)*ease;draw();if(t<1)requestAnimationFrame(frame);else{rotation=((to%TAU)+TAU)%TAU;draw();pendingChallenge=challenges[index];document.getElementById('challenge').textContent=pendingChallenge;document.getElementById('popupChallenge').textContent=pendingChallenge;if(!deferPopup)revealPendingChallenge();document.getElementById('status').textContent=deferPopup?"Challenge chosen · Starts with 30 seconds remaining.":"🎉 Challenge selected · Good luck!";spinning=false;spinBtn.disabled=false}}
+ function frame(now){const t=Math.min(1,(now-start)/duration),ease=1-Math.pow(1-t,4);rotation=from+(to-from)*ease;draw();if(t<1)requestAnimationFrame(frame);else{rotation=((to%TAU)+TAU)%TAU;draw();pendingChallenge=challenges[index];document.getElementById('challenge').textContent=pendingChallenge;document.getElementById('popupChallenge').textContent=pendingChallenge;document.getElementById('status').textContent=deferPopup?"🔥 Battle challenge selected!":"🎉 Challenge selected · Good luck!";spinning=false;spinBtn.disabled=false;revealPendingChallenge()}}
  requestAnimationFrame(frame);
 }
 spinBtn.addEventListener('click',spin);function closeResultOverlay(){const p=document.getElementById('challengePopup');if(p&&p.open)p.close();if(p)p.dataset.open='0';document.body.style.overflow='';}
