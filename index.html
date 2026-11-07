@@ -73,8 +73,8 @@ function draw(){
 const fireCanvas=document.getElementById('fire'),fireCtx=fireCanvas.getContext('2d');
 const fireParticles=[],embers=[];
 function spawnFlame(){
- const a=Math.random()*TAU,rad=458+Math.random()*40,life=28+Math.random()*38;
- fireParticles.push({x:500+Math.cos(a)*rad,y:500+Math.sin(a)*rad,life,max:life,vx:(Math.random()-.5)*1.2-.15,vy:-1.8-Math.random()*3.1,w:5+Math.random()*13,h:38+Math.random()*78,phase:Math.random()*TAU});
+ const a=Math.random()*TAU,rad=452+Math.random()*54,life=34+Math.random()*42;
+ fireParticles.push({x:500+Math.cos(a)*rad,y:500+Math.sin(a)*rad,life,max:life,vx:(Math.random()-.5)*2.1-.2,vy:-2.5-Math.random()*4.2,w:9+Math.random()*18,h:72+Math.random()*105,phase:Math.random()*TAU});
 }
 function spawnEmber(){
  const a=Math.random()*TAU,rad=440;
@@ -82,15 +82,15 @@ function spawnEmber(){
 }
 function animateFire(){
  fireCtx.clearRect(0,0,1000,1000);
- for(let k=0;k<10;k++)spawnFlame();
- if(Math.random()<.95)spawnEmber();
+ for(let k=0;k<22;k++)spawnFlame();
+ if(Math.random()<1)spawnEmber();
  for(let i=fireParticles.length-1;i>=0;i--){
-  const p=fireParticles[i];p.life--;p.x+=p.vx+Math.sin(p.phase+p.life*.12)*.65;p.y+=p.vy;p.w*=.987;
-  const fade=Math.min(1,p.life/12),height=p.h*(1-p.life/p.max*.35);
+  const p=fireParticles[i];p.life--;p.x+=p.vx+Math.sin(p.phase+p.life*.12)*1.15;p.y+=p.vy;p.w*=.982;
+  const fade=Math.min(1,p.life/10),height=p.h*(1-p.life/p.max*.28);
   fireCtx.save();fireCtx.globalAlpha=Math.min(1,fade*.92);fireCtx.translate(p.x,p.y);fireCtx.rotate(Math.sin(p.phase+p.life*.1)*.18);
-  const g=fireCtx.createLinearGradient(0,0,0,-height);g.addColorStop(0,'#fff4a6');g.addColorStop(.18,'#ffc02f');g.addColorStop(.48,'#ff5a12');g.addColorStop(1,'rgba(135,18,5,0)');
-  fireCtx.fillStyle=g;fireCtx.shadowColor='#ff4a0a';fireCtx.shadowBlur=15;
-  fireCtx.beginPath();fireCtx.moveTo(-p.w*.55,0);fireCtx.bezierCurveTo(-p.w*1.25,-height*.25,-p.w*.28,-height*.72,0,-height);fireCtx.bezierCurveTo(p.w*.38,-height*.7,p.w*1.2,-height*.24,p.w*.55,0);fireCtx.closePath();fireCtx.fill();
+  const g=fireCtx.createLinearGradient(0,0,0,-height);g.addColorStop(0,'#fffde0');g.addColorStop(.12,'#fff06a');g.addColorStop(.32,'#ffad22');g.addColorStop(.62,'#ff4a0b');g.addColorStop(1,'rgba(90,8,2,0)');
+  fireCtx.fillStyle=g;fireCtx.shadowColor='#ff4a0a';fireCtx.shadowBlur=24;
+  fireCtx.beginPath();fireCtx.moveTo(-p.w*.55,0);fireCtx.bezierCurveTo(-p.w*1.45,-height*.22,-p.w*.2,-height*.78,0,-height);fireCtx.bezierCurveTo(p.w*.22,-height*.82,p.w*1.45,-height*.2,p.w*.55,0);fireCtx.closePath();fireCtx.fill();
   fireCtx.restore();if(p.life<=0)fireParticles.splice(i,1);
  }
  for(let i=embers.length-1;i>=0;i--){
