@@ -174,7 +174,7 @@ function updateBattleClock(data){
  const remaining=Number(data.secsRemaining);
  if(Number.isFinite(remaining)){
   const elapsed=Math.max(0,battleDuration-remaining);
-  if(elapsed>=60)showWheel();
+  if(remaining<=60&&remaining>=0)showWheel();
   if(remaining<=30&&remaining>=0&&!autoSpun){showWheel();autoSpun=true;document.getElementById('status').textContent="FINAL 30 SECONDS — your challenge is being chosen!";spin();}
   if(remaining<=0)resetBattle();
  }
@@ -192,9 +192,10 @@ function handleBattleEvent(event,data){
 function tickBattle(){
  if(!battleActive)return;
  const elapsed=(Date.now()-battleStartAt)/1000;
- if(elapsed>=60)showWheel();
- if(battleDuration-elapsed<=30&&!autoSpun){showWheel();autoSpun=true;document.getElementById('status').textContent="FINAL 30 SECONDS — your challenge is being chosen!";spin();}
- if(elapsed>=battleDuration){resetBattle();lastBattleKey=""}
+ const remaining=battleDuration-elapsed;
+ if(remaining<=60&&remaining>=0)showWheel();
+ if(remaining<=30&&remaining>=0&&!autoSpun){showWheel();autoSpun=true;document.getElementById('status').textContent="FINAL 30 SECONDS — your challenge is being chosen!";spin();}
+ if(remaining<=0){resetBattle();lastBattleKey=""}
 }
 setInterval(tickBattle,500);
 function handleChat(data){
