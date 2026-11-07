@@ -175,13 +175,12 @@ if(new URLSearchParams(window.location.search).get('live')==='1')document.body.c
 function showWheel(){if(popupShown)return;popupShown=true;document.body.classList.add('active');document.getElementById('status').textContent="FINAL MINUTE — the Wheel of Doom is spinning!";}
 function revealPendingChallenge(){
  const popup=document.getElementById('challengePopup');
- if(!pendingChallenge||!popup||popup.open)return;
+ if(!pendingChallenge||!popup||!popup.hidden===false)return;
  document.getElementById('challenge').textContent=pendingChallenge;
  document.getElementById('popupChallenge').textContent=pendingChallenge;
- // A native modal dialog is promoted to the browser top layer, so it cannot
- // be clipped by main, transformed ancestors, or the wheel's stacking context.
+ // Place the overlay directly under body and lock page scrolling while it is open.
  if(popup.parentElement!==document.body)document.body.appendChild(popup);
- popup.dataset.open='1';
+ popup.hidden=false;popup.dataset.open='1';document.body.style.overflow='hidden';
  const card=popup.querySelector('.popup-card');
  card.style.animation='none';
  void card.offsetWidth;
