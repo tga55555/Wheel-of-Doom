@@ -46,6 +46,13 @@ button{border-color:#9d7448;background:linear-gradient(180deg,#701d16,#310d0a 55
 .popup-card{border-color:#9b7044;background:radial-gradient(ellipse at top,#42140f,#160706 62%,#050303);box-shadow:0 0 0 5px #100504,0 0 45px #76180f88,inset 0 0 35px #711b1633}
 .popup-challenge{color:#f2dfc1;text-shadow:0 0 14px #8d241a,0 3px 5px #000}
 
+
+/* Native dialog places the result in the browser top layer, above every page container. */
+dialog.popup{position:fixed!important;inset:0!important;margin:0!important;padding:2vh 2vw!important;width:100vw!important;height:100vh!important;height:100dvh!important;max-width:none!important;max-height:none!important;border:0!important;border-radius:0!important;overflow:auto!important;display:none!important;align-items:center!important;justify-content:center!important;background:rgba(0,0,0,.96)!important;color:#fff4dc!important;}
+dialog.popup[open]{display:flex!important;}
+dialog.popup::backdrop{background:rgba(0,0,0,.96);backdrop-filter:blur(10px);}
+dialog.popup .popup-card{width:min(94vw,1000px)!important;height:auto!important;min-height:min(500px,calc(100dvh - 32px))!important;max-height:calc(100dvh - 32px)!important;overflow-y:auto!important;margin:auto!important;}
+@media(max-width:600px){dialog.popup{padding:12px!important}dialog.popup .popup-card{width:100%!important;min-height:min(460px,calc(100dvh - 24px))!important;padding:28px 18px!important}}
 </style>
 </head>
 <body>
@@ -59,7 +66,7 @@ button{border-color:#9d7448;background:linear-gradient(180deg,#701d16,#310d0a 55
 <div class="hint">TikTok chat: type <b>!spin</b> to spin the wheel · <b>!help</b> for instructions<br>Streamer can also press the spin button.</div>
 <div class="status" id="status">Waiting for a TikTok battle to begin…</div>
 </main>
-<div id="challengePopup" class="popup" role="dialog" aria-modal="true" aria-labelledby="popupTitle" hidden><div class="popup-card"><div class="flame-confetti" id="flameConfetti" aria-hidden="true"></div><div class="popup-skull">☠</div><div class="popup-kicker" id="popupTitle">THE WHEEL HAS SPOKEN</div><div class="popup-challenge" id="popupChallenge"></div><button type="button" id="closePopup">GOT IT</button></div></div>
+<dialog id="challengePopup" class="popup" aria-labelledby="popupTitle"><div class="popup-card"><div class="flame-confetti" id="flameConfetti" aria-hidden="true"></div><div class="popup-skull">☠</div><div class="popup-kicker" id="popupTitle">THE WHEEL HAS SPOKEN</div><div class="popup-challenge" id="popupChallenge"></div><button type="button" id="closePopup">GOT IT</button></div></dialog>
 <script>
 const challenges=[
 "Talk like a pirate for 2 minutes 🏴‍☠️",
@@ -158,44 +165,28 @@ function spin(deferPopup=false){
  function frame(now){const t=Math.min(1,(now-start)/duration),ease=1-Math.pow(1-t,4);rotation=from+(to-from)*ease;draw();if(t<1)requestAnimationFrame(frame);else{rotation=((to%TAU)+TAU)%TAU;draw();pendingChallenge=challenges[index];document.getElementById('challenge').textContent=pendingChallenge;document.getElementById('popupChallenge').textContent=pendingChallenge;if(!deferPopup)revealPendingChallenge();document.getElementById('status').textContent=deferPopup?"Challenge chosen · Starts with 30 seconds remaining.":"🎉 Challenge selected · Good luck!";spinning=false;spinBtn.disabled=false}}
  requestAnimationFrame(frame);
 }
-spinBtn.addEventListener('click',spin);function closeResultOverlay(){const p=document.getElementById('challengePopup');p.hidden=true;p.dataset.open='0';p.style.removeProperty('display');p.style.removeProperty('position');p.style.removeProperty('inset');p.style.removeProperty('width');p.style.removeProperty('height');p.style.removeProperty('z-index');p.style.removeProperty('align-items');p.style.removeProperty('justify-content');p.style.removeProperty('background');p.style.removeProperty('padding');}document.getElementById('closePopup').addEventListener('click',closeResultOverlay);document.getElementById('challengePopup').addEventListener('click',e=>{if(e.target.id==='challengePopup')closeResultOverlay()});draw();
+spinBtn.addEventListener('click',spin);function closeResultOverlay(){const p=document.getElementById('challengePopup');if(p&&p.open)p.close();if(p)p.dataset.open='0';}
+document.getElementById('closePopup').addEventListener('click',closeResultOverlay);
+document.getElementById('challengePopup').addEventListener('click',e=>{if(e.target===e.currentTarget)closeResultOverlay()});
+document.getElementById('challengePopup').addEventListener('close',()=>{document.getElementById('challengePopup').dataset.open='0'});
+draw();
 // Normal link opens as a visible preview; add ?live=1 for the hidden-until-battle LIVE overlay.
 if(new URLSearchParams(window.location.search).get('live')==='1')document.body.classList.add('live-mode');
 function showWheel(){if(popupShown)return;popupShown=true;document.body.classList.add('active');document.getElementById('status').textContent="FINAL MINUTE — the Wheel of Doom is spinning!";}
 function revealPendingChallenge(){
  const popup=document.getElementById('challengePopup');
- if(!pendingChallenge||!popup||popup.dataset.open==='1')return;
+ if(!pendingChallenge||!popup||popup.open)return;
  document.getElementById('challenge').textContent=pendingChallenge;
  document.getElementById('popupChallenge').textContent=pendingChallenge;
- // Move the overlay to the top level and force full-viewport positioning,
- // so no wheel/container styling can clip or cover it.
+ // A native modal dialog is promoted to the browser top layer, so it cannot
+ // be clipped by main, transformed ancestors, or the wheel's stacking context.
  if(popup.parentElement!==document.body)document.body.appendChild(popup);
- popup.hidden=false;popup.dataset.open='1';
- popup.style.setProperty('position','fixed','important');
- popup.style.setProperty('top','0','important');
- popup.style.setProperty('right','0','important');
- popup.style.setProperty('bottom','0','important');
- popup.style.setProperty('left','0','important');
- popup.style.setProperty('inset','0','important');
- popup.style.setProperty('width','100vw','important');
- popup.style.setProperty('height','100vh','important');
- popup.style.setProperty('height','100dvh','important');
- popup.style.setProperty('margin','0','important');
- popup.style.setProperty('z-index','2147483647','important');
- popup.style.setProperty('display','grid','important');
- popup.style.setProperty('place-items','center','important');
- popup.style.setProperty('background','rgba(0,0,0,.995)','important');
- popup.style.setProperty('padding','2vh 2vw','important');
+ popup.dataset.open='1';
  const card=popup.querySelector('.popup-card');
- card.style.setProperty('position','relative','important');
- card.style.setProperty('margin','auto','important');
- card.style.setProperty('width','min(94vw,820px)','important');
- card.style.setProperty('height','min(88vh,760px)','important');
- card.style.setProperty('height','min(88dvh,760px)','important');
- card.style.setProperty('max-height','calc(100vh - 24px)','important');
- card.style.setProperty('max-height','calc(100dvh - 24px)','important');
- card.style.setProperty('min-height','min(72dvh,620px)','important');
- card.style.setProperty('box-sizing','border-box','important');
+ card.style.animation='none';
+ void card.offsetWidth;
+ card.style.animation='';
+ popup.showModal();
  burstFlameConfetti();
  document.getElementById('status').textContent="🔥 FINAL 30 SECONDS — YOUR CHALLENGE STARTS NOW!";
 }
