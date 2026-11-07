@@ -8,31 +8,31 @@
 :root{color-scheme:dark;--cyan:#65e9f2;--pink:#ff4d88;--gold:#ffd36e;--inferno:#a82b12;--antique:#d8a65a}
 *{box-sizing:border-box}body{margin:0;min-height:100vh;background:linear-gradient(180deg,#08060638,#08060677),url("https://images.openai.com/static-rsc-4/lgH2QseUR-IxworBpSkZnMqkXPDUhwnn2ddJRFIb-O-zvHWhB9iUa2uEj2B5V6nnOW0cfcUknM0A4oWctpBuL_xIGJl4HqHXJJKOb7q5NbTX55Di_Th8sFJ44fJcmwKVy6TiOCwdYZSNsLPocgAsBYYOBEjAZMrVYV8RY3sPE6M?purpose=inline") center center/cover fixed no-repeat;color:#fff4dc;font:16px Georgia,'Times New Roman',serif;display:grid;place-items:center;padding:16px;overflow-x:hidden;overflow-y:auto}
 main{position:relative;isolation:isolate;width:min(100%,780px);text-align:center;padding:22px 18px 18px;border:1px solid #c18a4c66;border-radius:8px;background:linear-gradient(145deg,#10080755,#16090744 55%,#08050566);box-shadow:0 18px 55px #0009,inset 0 0 45px #a12a1412;backdrop-filter:blur(2px);opacity:1;visibility:visible;transform:translateY(0) scale(1);transition:opacity .7s ease,transform .7s ease,visibility .7s}to{transform:translate(12px,-10px) scale(1.05)}}.live-mode main{opacity:0;visibility:hidden;transform:translateY(24px) scale(.96)}.live-mode.active main{opacity:1;visibility:visible;transform:translateY(0) scale(1)}.tag{display:block;width:max-content;max-width:100%;margin:0 auto 8px;color:#f6d79d;letter-spacing:4px;font-weight:1000;font-size:12px;padding:8px 18px;border:1px solid #a36d3b;border-radius:2px;background:linear-gradient(90deg,#1b0b09,#4a1b12,#1b0b09);text-shadow:0 2px 7px #000;box-shadow:inset 0 0 15px #c65a1c33}.battle-tag{color:#ffd8ad;border-color:#a65c35;background:#38251c}h1{font-family:Georgia,'Times New Roman',serif;font-size:clamp(34px,8vw,68px);line-height:.98;margin:12px 0;color:#f8d58b;letter-spacing:1px;text-transform:uppercase;-webkit-text-stroke:1px #5a230f;text-shadow:0 2px 0 #5a210d,0 4px 0 #1b0906,0 0 12px #ff8b2b99,0 8px 20px #000}.sub{position:relative;z-index:5;display:table;margin:0 auto 16px;padding:5px 14px;color:#ffe0ad;font-weight:700;font-style:italic;text-shadow:0 2px 4px #000,0 0 10px #000;background:linear-gradient(90deg,transparent,#160a08dd 18%,#160a08dd 82%,transparent);border-radius:4px}
-.wheel-wrap{width:min(78vw,470px);aspect-ratio:1;margin:34px auto 26px;position:relative;filter:drop-shadow(0 18px 28px #000) drop-shadow(0 0 18px #a52b10)}.wheel-wrap:before{content:"";position:absolute;inset:-17px;border-radius:50%;border:10px ridge #b8874d;box-shadow:0 0 0 4px #1b0907,0 0 0 7px #6e351e,0 0 28px #ff6a1b99,inset 0 0 20px #000;pointer-events:none;z-index:2}.wheel-wrap:after{content:"";position:absolute;inset:-7px;border-radius:50%;border:2px solid #f2c879;box-shadow:inset 0 0 12px #ff9b36,0 0 12px #ff6a1b;pointer-events:none;z-index:2}.smoke-plume,.flame-plume{position:absolute;z-index:0;inset:-48px;border-radius:50%;pointer-events:none}@keyframes fireRotate{to{transform:rotate(360deg)}}
-#fire{position:absolute;z-index:2;inset:-75px;width:calc(100% + 150px);height:calc(100% + 150px);pointer-events:none;overflow:visible}.pointer{z-index:4}.hub{z-index:3}@keyframes orbit{to{transform:rotate(360deg)}}
+.wheel-wrap{width:min(78vw,470px);aspect-ratio:1;margin:34px auto 26px;position:relative;filter:drop-shadow(0 18px 28px #000) drop-shadow(0 0 18px #b87935)}.wheel-wrap:before{content:"";position:absolute;inset:-17px;border-radius:50%;border:10px ridge #b8874d;box-shadow:0 0 0 4px #1b0907,0 0 0 7px #6e351e,0 0 24px #d99a4d88,inset 0 0 20px #000;pointer-events:none;z-index:2}.wheel-wrap:after{content:"";position:absolute;inset:-7px;border-radius:50%;border:2px solid #f2c879;box-shadow:inset 0 0 12px #d99a4d66,0 0 14px #d99a4d99;pointer-events:none;z-index:2}}
+.pointer{z-index:4}.hub{z-index:3}}
 canvas{position:relative;z-index:1;width:100%;height:100%;display:block;border-radius:50%}
 .pointer{
- position:absolute;z-index:5;top:-34px;left:50%;transform:translateX(-50%);
- width:58px;height:78px;pointer-events:none;
- background:linear-gradient(90deg,#4b1b0d 0%,#9b5521 12%,#ffe6a0 27%,#c98b3e 43%,#fff0b8 53%,#a85b22 76%,#3c140b 100%);
- clip-path:polygon(50% 100%,43% 78%,9% 17%,17% 5%,50% 0,83% 5%,91% 17%,57% 78%);
- filter:drop-shadow(0 3px 2px #120604) drop-shadow(0 0 9px #ff7a18) drop-shadow(0 0 19px #ff3b08);
+ position:absolute;z-index:5;top:-25px;left:50%;transform:translateX(-50%);
+ width:62px;height:76px;pointer-events:none;
+ background:linear-gradient(90deg,#4b1b0d 0%,#9b5521 15%,#f8d58b 38%,#fff0bd 50%,#c18a42 72%,#4a190d 100%);
+ clip-path:polygon(0 0,100% 0,100% 23%,58% 23%,50% 100%,42% 23%,0 23%);
+ filter:drop-shadow(0 3px 2px #100503) drop-shadow(0 0 8px #d99a4d);
 }
 .pointer:before{
- content:"";position:absolute;inset:5px 8px 14px;
- background:linear-gradient(90deg,#6d2c12,#f8d88a 32%,#fff5c9 49%,#d18b35 70%,#6b260f);
- clip-path:polygon(50% 100%,42% 76%,8% 16%,18% 5%,50% 0,82% 5%,92% 16%,58% 76%);
+ content:"";position:absolute;inset:4px 7px 13px;
+ background:linear-gradient(90deg,#713016,#f6d58b 40%,#fff4cf 52%,#9b4c1c);
+ clip-path:polygon(0 0,100% 0,100% 24%,58% 24%,50% 100%,42% 24%,0 24%);
 }
 .pointer:after{
- content:"";position:absolute;left:50%;top:13px;transform:translateX(-50%);
- width:13px;height:13px;border-radius:50%;
- background:radial-gradient(circle at 35% 28%,#fff8d1 0 12%,#ffdc70 25%,#c84b16 62%,#4b1008 100%);
- border:2px solid #f6d58c;box-shadow:0 0 7px #ff9b26,0 0 15px #ff4a0a;
+ content:"";position:absolute;left:50%;top:5px;transform:translateX(-50%);
+ width:11px;height:11px;border-radius:50%;
+ background:radial-gradient(circle at 35% 28%,#fff8d1 0 12%,#e9bd6b 35%,#713016 100%);
+ border:1px solid #f6d58c;box-shadow:0 0 6px #d99a4d;
 }
 .hub{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:19%;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 36% 28%,#f8dca0,#a96a32 28%,#3b1710 67%,#100807 100%);border:7px double #e5bd72;box-shadow:0 0 0 4px #38160e,0 0 22px #ff641e99,inset 0 0 16px #000;pointer-events:none}.hub:after{content:'☠';font:clamp(26px,6vw,42px) Georgia,serif;color:#f6d18b;text-shadow:0 2px 2px #210904,0 0 10px #ff6b20}
 button{font:1000 16px Georgia,'Times New Roman',serif;letter-spacing:2px;border:2px solid #e3b66b;border-radius:3px;padding:15px 32px;background:linear-gradient(180deg,#a83b19,#4c160e 55%,#210b08);color:#ffe4ad;text-shadow:0 2px 4px #210904;box-shadow:0 5px 0 #1c0907,0 8px 22px #000b,inset 0 0 18px #ff9b342e;cursor:pointer;animation:buttonGlow 2s ease-in-out infinite alternate;transition:transform .15s}button:hover{transform:translateY(-3px) scale(1.03)}button:disabled{opacity:.5;cursor:wait;animation:none}@keyframes buttonGlow{to{box-shadow:0 5px 0 #35271f,0 10px 22px #000b}}
 .result{min-height:96px;margin:18px auto 12px;padding:17px;border:1px solid #a76a3d;border-radius:4px;background:linear-gradient(140deg,#3a1712ee,#100a09ee);max-width:640px;box-shadow:0 0 22px #e34b1622,inset 0 0 24px #a62b1428}.result small{color:#ffe58b;letter-spacing:3px;font-weight:1000}.challenge{font-family:Georgia,'Times New Roman',serif;font-size:clamp(22px,5vw,36px);font-weight:1000;margin-top:7px;color:#ffe0a0;text-shadow:0 0 16px #ff5a1aaa,0 2px 4px #000}.result.pop{animation:resultPop .65s cubic-bezier(.2,1.5,.4,1)}@keyframes resultPop{0%{transform:scale(.85);filter:brightness(1)}55%{transform:scale(1.06);filter:brightness(1.8)}100%{transform:scale(1);filter:brightness(1)}}
-.result small{color:var(--gold);letter-spacing:3px;font-weight:800}.challenge{font-size:clamp(22px,5vw,36px);font-weight:900;margin-top:6px;color:#fff}.hint{font-size:13px;color:#d9c9f5;line-height:1.6;margin-top:14px}.hint b{color:#ffe58b}.status{font-size:12px;color:#a9dff2;margin-top:10px;font-weight:700}.fire-confetti{position:fixed;z-index:80;top:-35px;line-height:1;pointer-events:none;filter:drop-shadow(0 0 5px #ff6a16) drop-shadow(0 0 10px #ffb52e);animation:fireRain 2.6s ease-in forwards}@keyframes fireRain{0%{transform:translate3d(0,-4vh,0) rotate(-18deg) scale(.7);opacity:0}12%{opacity:1}55%{transform:translate3d(calc(var(--drift)*.55),55vh,0) rotate(170deg) scale(1.12);opacity:1}100%{transform:translate3d(var(--drift),110vh,0) rotate(390deg) scale(.65);opacity:0}}
+.result small{color:var(--gold);letter-spacing:3px;font-weight:800}.challenge{font-size:clamp(22px,5vw,36px);font-weight:900;margin-top:6px;color:#fff}.hint{font-size:13px;color:#d9c9f5;line-height:1.6;margin-top:14px}.hint b{color:#ffe58b}.status{font-size:12px;color:#a9dff2;margin-top:10px;font-weight:700}12%{opacity:1}55%{transform:translate3d(calc(var(--drift)*.55),55vh,0) rotate(170deg) scale(1.12);opacity:1}100%{transform:translate3d(var(--drift),110vh,0) rotate(390deg) scale(.65);opacity:0}}
 .status{font-size:12px;color:#9cb5ca;margin-top:10px}
 .popup{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:20px;background:#050303df;backdrop-filter:blur(8px)}.popup[hidden]{display:none}.popup-card{position:relative;overflow:visible;width:min(100%,560px);padding:30px 24px 26px;text-align:center;border:3px ridge #d8a65a;border-radius:8px;background:radial-gradient(ellipse at top,#652515,#1b0907 62%,#080505);box-shadow:0 0 0 5px #210b08,0 0 55px #ff4b16aa,inset 0 0 35px #ff6b1c33;animation:popupReveal .45s cubic-bezier(.2,1.5,.4,1)}.popup-skull{font-size:54px;color:#f6d58c;text-shadow:0 0 20px #ff6a1b}.popup-kicker{margin:8px 0 16px;color:#ffd36e;font-size:clamp(14px,3vw,19px);font-weight:1000;letter-spacing:4px}.popup-challenge{font:1000 clamp(27px,6vw,46px)/1.15 Georgia,Times New Roman,serif;color:#fff0c8;text-shadow:0 0 18px #ff5419,0 3px 5px #000;margin:0 auto 25px}@keyframes popupReveal{from{opacity:0;transform:scale(.72) rotate(-3deg)}to{opacity:1;transform:scale(1) rotate(0)}}
 @media(max-width:480px){body{padding:10px}.wheel-wrap{width:min(88vw,390px)}button{padding:13px 24px}}
@@ -43,7 +43,7 @@ button{font:1000 16px Georgia,'Times New Roman',serif;letter-spacing:2px;border:
 <div class="tag">SMOKE AFTER DARK</div>
 <div class="tag battle-tag">⚠ LIVE BATTLE CHALLENGE ⚠</div>
 <h1>WHEEL OF DOOM</h1>
-<div class="wheel-wrap"><canvas id="fire" width="1000" height="1000" aria-hidden="true"></canvas><div class="pointer"></div><canvas id="wheel" width="900" height="900"></canvas><div class="hub"></div></div>
+<div class="wheel-wrap"><div class="pointer"></div><canvas id="wheel" width="900" height="900"></canvas><div class="hub"></div></div>
 <button id="spin">SPIN THE WHEEL</button>
 <section class="result" aria-live="polite"><small>YOUR DOOM IS…</small><div class="challenge" id="challenge">Waiting for the first spin…</div></section>
 <div class="hint">TikTok chat: type <b>!spin</b> to spin the wheel · <b>!help</b> for instructions<br>Streamer can also press the spin button.</div>
@@ -86,104 +86,6 @@ function draw(){
  ctx.restore();ctx.beginPath();ctx.arc(cx,cy,r-7,0,TAU);ctx.strokeStyle='#d5a45c';ctx.lineWidth=18;ctx.shadowColor='#ff3b0b';ctx.shadowBlur=12;ctx.stroke();ctx.shadowBlur=0;ctx.beginPath();ctx.arc(cx,cy,105,0,TAU);ctx.strokeStyle='#d6a65f';ctx.lineWidth=11;ctx.stroke();
 }
 
-// A single continuous inferno: turbulent fire tongues erupt from the rim all the way around.
-const fireCanvas=document.getElementById('fire'),fireCtx=fireCanvas.getContext('2d');
-let fireTime=0;
-const TAU_FIRE=Math.PI*2;
-const flameSeeds=Array.from({length:58},(_,i)=>({
- angle:i/58*TAU_FIRE+(Math.random()-.5)*.075,
- height:58+Math.random()*74,
- width:.035+Math.random()*.045,
- speed:.7+Math.random()*1.4,
- phase:Math.random()*TAU_FIRE
-}));
-function flamePoint(a,r){return {x:500+Math.cos(a)*r,y:500+Math.sin(a)*r};}
-function drawTongue(seed,index,layer){
- const flicker=.72+.28*Math.sin(fireTime*seed.speed+seed.phase);
- const sway=Math.sin(fireTime*(1.1+seed.speed*.25)+seed.phase)*.025;
- const h=seed.height*flicker*layer;
- const a=seed.angle+sway;
- const base=flamePoint(a,386);
- const left=flamePoint(a-seed.width,394);
- const right=flamePoint(a+seed.width,394);
- const tip=flamePoint(a+Math.sin(fireTime*seed.speed+seed.phase)*.018,405+h);
- const lobeL=flamePoint(a-seed.width*.48,405+h*.58);
- const lobeR=flamePoint(a+seed.width*.48,405+h*.62);
- const grad=fireCtx.createRadialGradient(tip.x,tip.y,1,base.x,base.y,h+52);
- grad.addColorStop(0,layer>1?'rgba(255,235,105,.72)':'rgba(255,245,160,.95)');
- grad.addColorStop(.28,'rgba(255,174,31,.96)');
- grad.addColorStop(.68,'rgba(255,73,8,.9)');
- grad.addColorStop(1,'rgba(155,13,0,0)');
- fireCtx.beginPath();fireCtx.moveTo(left.x,left.y);
- fireCtx.quadraticCurveTo(lobeL.x,lobeL.y,tip.x,tip.y);
- fireCtx.quadraticCurveTo(lobeR.x,lobeR.y,right.x,right.y);
- fireCtx.closePath();fireCtx.fillStyle=grad;
- fireCtx.shadowColor=layer>1?'#ff6a0a':'#ff3100';fireCtx.shadowBlur=layer>1?23:34;fireCtx.fill();
-}
-function drawFireRing(inner,outer,phase,fillStyle,alpha){
- fireCtx.save();fireCtx.globalAlpha=alpha;fireCtx.beginPath();
- for(let i=0;i<=300;i++){
-  const a=i/300*TAU_FIRE+phase;
-  const r=outer+Math.sin(a*9+fireTime*2)*5+Math.sin(a*17-fireTime*2.8)*3;
-  const p=flamePoint(a,r);if(i===0)fireCtx.moveTo(p.x,p.y);else fireCtx.lineTo(p.x,p.y);
- }
- for(let i=300;i>=0;i--){const a=i/300*TAU_FIRE+phase;const p=flamePoint(a,inner+Math.sin(a*8-fireTime*1.7)*3);fireCtx.lineTo(p.x,p.y);}
- fireCtx.closePath();fireCtx.fillStyle=fillStyle;fireCtx.shadowColor='#ff3c00';fireCtx.shadowBlur=32;fireCtx.fill();fireCtx.restore();
-}
-function animateFire(){
- fireCtx.clearRect(0,0,1000,1000);fireTime+=.035;
- // Rolling charcoal smoke rises in translucent turbulent curls behind the flames.
- for(let i=0;i<34;i++){
-  const a=i/34*TAU_FIRE+Math.sin(fireTime*.45+i)*.16;
-  const drift=Math.sin(fireTime*.7+i*2.1)*18;
-  const radius=430+((i*29+fireTime*13)%112);
-  const p=flamePoint(a,radius);
-  const puff=fireCtx.createRadialGradient(p.x-8,p.y-12,2,p.x,p.y,24+(i%5)*8);
-  puff.addColorStop(0,'rgba(45,43,42,.28)');puff.addColorStop(.48,'rgba(25,23,23,.19)');puff.addColorStop(1,'rgba(10,9,9,0)');
-  fireCtx.save();fireCtx.translate(drift,-((fireTime*17+i*19)%34));fireCtx.globalAlpha=.42+.22*Math.sin(fireTime+i);
-  fireCtx.fillStyle=puff;fireCtx.beginPath();fireCtx.ellipse(p.x,p.y,18+(i%4)*8,28+(i%5)*7,a+.4,0,TAU_FIRE);fireCtx.fill();fireCtx.restore();
- }
- // Build the connected burning base first, so the individual tongues merge into one eruption.
- const base=fireCtx.createRadialGradient(500,500,426,500,500,500);
- base.addColorStop(0,'rgba(255,239,116,0)');base.addColorStop(.23,'rgba(255,231,104,.98)');
- base.addColorStop(.42,'rgba(255,125,15,.98)');base.addColorStop(.75,'rgba(245,47,4,.88)');base.addColorStop(1,'rgba(105,8,0,0)');
- drawFireRing(382,442,0,base,.98);
- // Two staggered layers create depth, heat shimmer and a real flame silhouette.
- fireCtx.save();fireCtx.globalCompositeOperation='screen';
- flameSeeds.forEach((seed,i)=>drawTongue(seed,i,1));
- flameSeeds.forEach((seed,i)=>{if(i%2===0)drawTongue({...seed,angle:seed.angle+.045,height:seed.height*.72,phase:seed.phase+1.4},i,1.25)});
- fireCtx.restore();
- // A molten white-gold line at the wheel edge makes the fire feel intensely hot.
- const core=fireCtx.createRadialGradient(500,500,382,500,500,425);
- core.addColorStop(0,'rgba(255,255,180,0)');core.addColorStop(.45,'rgba(255,245,147,.95)');
- core.addColorStop(.76,'rgba(255,156,30,.78)');core.addColorStop(1,'rgba(255,80,0,0)');
- drawFireRing(388,421,fireTime*.012,core,.82);
- // Sparks shoot outward from the same continuous flame front.
- for(let i=0;i<30;i++){
-  const a=(i/30)*TAU_FIRE+fireTime*(.16+(i%4)*.018);
-  const r=435+((fireTime*21+i*37)%92);
-  const p=flamePoint(a,r);
-  fireCtx.globalAlpha=.25+.7*(.5+.5*Math.sin(fireTime*5+i));
-  fireCtx.fillStyle=i%4===0?'#fff5b2':'#ff9b28';fireCtx.shadowColor='#ff4a08';fireCtx.shadowBlur=15;
-  fireCtx.beginPath();fireCtx.arc(p.x,p.y,1.4+(i%3),0,TAU_FIRE);fireCtx.fill();
- }
- fireCtx.globalAlpha=1;fireCtx.shadowBlur=0;requestAnimationFrame(animateFire);
-}
-animateFire();
-function confettiBurst(){
- // Fire showers fall directly over the revealed result and popup, not behind the overlay.
- const center=window.innerWidth/2;
- for(let i=0;i<78;i++){
-  const bit=document.createElement('span');bit.className='fire-confetti';bit.textContent=i%7===0?'✨':'🔥';
-  bit.style.left=Math.max(8,Math.min(92,50+(Math.random()-.5)*76))+'vw';
-  bit.style.top=(-25-Math.random()*180)+'px';
-  bit.style.fontSize=(16+Math.random()*23)+'px';
-  bit.style.setProperty('--drift',(Math.random()*300-150)+'px');
-  bit.style.animationDuration=(2.3+Math.random()*1.5)+'s';
-  bit.style.animationDelay=(Math.random()*.45)+'s';
-  document.body.appendChild(bit);setTimeout(()=>bit.remove(),4400);
- }
-}
 function spin(){
  if(spinning)return;
  spinning=true;spinBtn.disabled=true;document.getElementById('status').textContent="The wheel is spinning…";
@@ -194,7 +96,7 @@ function spin(){
  const target=((-(index+.5)*arc-current)%TAU+TAU)%TAU;
  const extra=TAU*(5+Math.floor(Math.random()*3));
  const from=rotation,to=rotation+extra+target,duration=5200,start=performance.now();
- function frame(now){const t=Math.min(1,(now-start)/duration),ease=1-Math.pow(1-t,4);rotation=from+(to-from)*ease;draw();if(t<1)requestAnimationFrame(frame);else{rotation=((to%TAU)+TAU)%TAU;draw();document.getElementById('challenge').textContent=challenges[index];document.getElementById('popupChallenge').textContent=challenges[index];document.getElementById('challengePopup').hidden=false;const result=document.querySelector('.result');result.classList.remove('pop');void result.offsetWidth;result.classList.add('pop');confettiBurst();document.getElementById('status').textContent="🎉 Challenge selected · Good luck!";spinning=false;spinBtn.disabled=false}}
+ function frame(now){const t=Math.min(1,(now-start)/duration),ease=1-Math.pow(1-t,4);rotation=from+(to-from)*ease;draw();if(t<1)requestAnimationFrame(frame);else{rotation=((to%TAU)+TAU)%TAU;draw();document.getElementById('challenge').textContent=challenges[index];document.getElementById('popupChallenge').textContent=challenges[index];document.getElementById('challengePopup').hidden=false;const result=document.querySelector('.result');result.classList.remove('pop');void result.offsetWidth;result.classList.add('pop');document.getElementById('status').textContent="🎉 Challenge selected · Good luck!";spinning=false;spinBtn.disabled=false}}
  requestAnimationFrame(frame);
 }
 spinBtn.addEventListener('click',spin);document.getElementById('closePopup').addEventListener('click',()=>{document.getElementById('challengePopup').hidden=true});document.getElementById('challengePopup').addEventListener('click',e=>{if(e.target.id==='challengePopup')e.currentTarget.hidden=true});draw();
