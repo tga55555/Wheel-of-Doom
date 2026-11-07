@@ -6,7 +6,7 @@
 <title>WHEEL OF DOOM — TikTok LIVE</title>
 <style>
 :root{color-scheme:dark;--cyan:#65e9f2;--pink:#ff4d88;--gold:#ffd36e;--inferno:#a82b12;--antique:#d8a65a}
-*{box-sizing:border-box}body{margin:0;min-height:100vh;background:linear-gradient(180deg,#08060638,#08060677),url("https://images.openai.com/static-rsc-4/lgH2QseUR-IxworBpSkZnMqkXPDUhwnn2ddJRFIb-O-zvHWhB9iUa2uEj2B5V6nnOW0cfcUknM0A4oWctpBuL_xIGJl4HqHXJJKOb7q5NbTX55Di_Th8sFJ44fJcmwKVy6TiOCwdYZSNsLPocgAsBYYOBEjAZMrVYV8RY3sPE6M?purpose=inline") center center/cover fixed no-repeat;color:#fff4dc;font:16px Georgia,'Times New Roman',serif;display:grid;place-items:center;padding:16px;overflow-x:hidden;overflow-y:auto}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:linear-gradient(180deg,#08060612,#08060640),url("https://images.openai.com/static-rsc-4/lgH2QseUR-IxworBpSkZnMqkXPDUhwnn2ddJRFIb-O-zvHWhB9iUa2uEj2B5V6nnOW0cfcUknM0A4oWctpBuL_xIGJl4HqHXJJKOb7q5NbTX55Di_Th8sFJ44fJcmwKVy6TiOCwdYZSNsLPocgAsBYYOBEjAZMrVYV8RY3sPE6M?purpose=inline") center center/cover fixed no-repeat;color:#fff4dc;font:16px Georgia,'Times New Roman',serif;display:grid;place-items:center;padding:16px;overflow-x:hidden;overflow-y:auto}
 main{position:relative;isolation:isolate;width:min(100%,780px);text-align:center;padding:22px 18px 18px;border:1px solid #c18a4c66;border-radius:8px;background:linear-gradient(145deg,#10080755,#16090744 55%,#08050566);box-shadow:0 18px 55px #0009,inset 0 0 45px #a12a1412;backdrop-filter:blur(2px);opacity:1;visibility:visible;transform:translateY(0) scale(1);transition:opacity .7s ease,transform .7s ease,visibility .7s}to{transform:translate(12px,-10px) scale(1.05)}}.live-mode main{opacity:0;visibility:hidden;transform:translateY(24px) scale(.96)}.live-mode.active main{opacity:1;visibility:visible;transform:translateY(0) scale(1)}.tag{display:block;width:max-content;max-width:100%;margin:0 auto 8px;color:#f6d79d;letter-spacing:4px;font-weight:1000;font-size:12px;padding:8px 18px;border:1px solid #a36d3b;border-radius:2px;background:linear-gradient(90deg,#1b0b09,#4a1b12,#1b0b09);text-shadow:0 2px 7px #000;box-shadow:inset 0 0 15px #c65a1c33}.battle-tag{color:#ffd8ad;border-color:#a65c35;background:#38251c}h1{font-family:Georgia,'Times New Roman',serif;font-size:clamp(34px,8vw,68px);line-height:.98;margin:12px 0;color:#f8d58b;letter-spacing:1px;text-transform:uppercase;-webkit-text-stroke:1px #5a230f;text-shadow:0 2px 0 #5a210d,0 4px 0 #1b0906,0 0 12px #ff8b2b99,0 8px 20px #000}.sub{position:relative;z-index:5;display:table;margin:0 auto 16px;padding:5px 14px;color:#ffe0ad;font-weight:700;font-style:italic;text-shadow:0 2px 4px #000,0 0 10px #000;background:linear-gradient(90deg,transparent,#160a08dd 18%,#160a08dd 82%,transparent);border-radius:4px}
 .wheel-wrap{width:min(78vw,470px);aspect-ratio:1;margin:34px auto 26px;position:relative;filter:drop-shadow(0 18px 28px #000) drop-shadow(0 0 18px #b87935)}.wheel-wrap:before{content:"";position:absolute;inset:-17px;border-radius:50%;border:10px ridge #b8874d;box-shadow:0 0 0 4px #1b0907,0 0 0 7px #6e351e,0 0 24px #d99a4d88,inset 0 0 20px #000;pointer-events:none;z-index:2}.wheel-wrap:after{content:"";position:absolute;inset:-7px;border-radius:50%;border:2px solid #f2c879;box-shadow:inset 0 0 12px #d99a4d66,0 0 14px #d99a4d99;pointer-events:none;z-index:2}}
 .pointer{z-index:4}.hub{z-index:3}}
@@ -36,6 +36,21 @@ button{font:1000 16px Georgia,'Times New Roman',serif;letter-spacing:2px;border:
 .status{font-size:12px;color:#9cb5ca;margin-top:10px}
 .popup{position:fixed;inset:0;z-index:50;display:grid;place-items:center;padding:20px;background:#050303df;backdrop-filter:blur(8px)}.popup[hidden]{display:none}.popup-card{position:relative;overflow:visible;width:min(100%,560px);padding:30px 24px 26px;text-align:center;border:3px ridge #d8a65a;border-radius:8px;background:radial-gradient(ellipse at top,#652515,#1b0907 62%,#080505);box-shadow:0 0 0 5px #210b08,0 0 55px #ff4b16aa,inset 0 0 35px #ff6b1c33;animation:popupReveal .45s cubic-bezier(.2,1.5,.4,1)}.popup-skull{font-size:54px;color:#f6d58c;text-shadow:0 0 20px #ff6a1b}.popup-kicker{margin:8px 0 16px;color:#ffd36e;font-size:clamp(14px,3vw,19px);font-weight:1000;letter-spacing:4px}.popup-challenge{font:1000 clamp(27px,6vw,46px)/1.15 Georgia,Times New Roman,serif;color:#fff0c8;text-shadow:0 0 18px #ff5419,0 3px 5px #000;margin:0 auto 25px}@keyframes popupReveal{from{opacity:0;transform:scale(.72) rotate(-3deg)}to{opacity:1;transform:scale(1) rotate(0)}}
 @media(max-width:480px){body{padding:10px}.wheel-wrap{width:min(88vw,390px)}button{padding:13px 24px}}
+
+/* Classic skull-and-doom appearance */
+body{background-color:#050303}
+main{background:linear-gradient(145deg,#080606b8,#160807a8 55%,#050303b8);border-color:#75402b;box-shadow:0 18px 65px #000e,inset 0 0 55px #6e160e22}
+.wheel-wrap{filter:drop-shadow(0 18px 30px #000) drop-shadow(0 0 10px #5d160e)}
+.wheel-wrap:before{border:10px ridge #79502f;box-shadow:0 0 0 4px #090505,0 0 0 7px #3b1711,0 0 18px #7e271d66,inset 0 0 24px #000}
+.wheel-wrap:after{border-color:#b68a53;box-shadow:inset 0 0 14px #000,0 0 8px #8d291b66}
+.hub{background:radial-gradient(circle at 36% 28%,#d8bd8c,#705037 28%,#25100d 67%,#050303 100%);border-color:#a9824c;box-shadow:0 0 0 4px #160806,0 0 18px #741b13,inset 0 0 20px #000}
+.hub:after{color:#f0d7a4;text-shadow:0 3px 4px #000,0 0 12px #9f2b1d}
+.result{border-color:#633222;background:linear-gradient(140deg,#260d0bee,#090606f2);box-shadow:0 0 20px #6b160e33,inset 0 0 24px #4c100d33}
+.challenge{color:#f2dfc1;text-shadow:0 0 12px #7d2017,0 2px 5px #000}
+button{border-color:#9d7448;background:linear-gradient(180deg,#701d16,#310d0a 55%,#100504);color:#f0d8ad;box-shadow:0 5px 0 #100504,0 8px 22px #000c,inset 0 0 15px #8b211c33}
+.popup-card{border-color:#9b7044;background:radial-gradient(ellipse at top,#42140f,#160706 62%,#050303);box-shadow:0 0 0 5px #100504,0 0 45px #76180f88,inset 0 0 35px #711b1633}
+.popup-challenge{color:#f2dfc1;text-shadow:0 0 14px #8d241a,0 3px 5px #000}
+
 </style>
 </head>
 <body>
