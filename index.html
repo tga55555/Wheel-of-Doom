@@ -158,12 +158,41 @@ function spin(deferPopup=false){
  function frame(now){const t=Math.min(1,(now-start)/duration),ease=1-Math.pow(1-t,4);rotation=from+(to-from)*ease;draw();if(t<1)requestAnimationFrame(frame);else{rotation=((to%TAU)+TAU)%TAU;draw();pendingChallenge=challenges[index];document.getElementById('challenge').textContent=pendingChallenge;document.getElementById('popupChallenge').textContent=pendingChallenge;if(!deferPopup)revealPendingChallenge();document.getElementById('status').textContent=deferPopup?"Challenge chosen · Starts with 30 seconds remaining.":"🎉 Challenge selected · Good luck!";spinning=false;spinBtn.disabled=false}}
  requestAnimationFrame(frame);
 }
-spinBtn.addEventListener('click',spin);document.getElementById('closePopup').addEventListener('click',()=>{document.getElementById('challengePopup').hidden=true});document.getElementById('challengePopup').addEventListener('click',e=>{if(e.target.id==='challengePopup')e.currentTarget.hidden=true});draw();
+spinBtn.addEventListener('click',spin);function closeResultOverlay(){const p=document.getElementById('challengePopup');p.hidden=true;p.dataset.open='0';p.style.removeProperty('display');p.style.removeProperty('position');p.style.removeProperty('inset');p.style.removeProperty('width');p.style.removeProperty('height');p.style.removeProperty('z-index');p.style.removeProperty('align-items');p.style.removeProperty('justify-content');p.style.removeProperty('background');p.style.removeProperty('padding');}document.getElementById('closePopup').addEventListener('click',closeResultOverlay);document.getElementById('challengePopup').addEventListener('click',e=>{if(e.target.id==='challengePopup')closeResultOverlay()});draw();
 // Normal link opens as a visible preview; add ?live=1 for the hidden-until-battle LIVE overlay.
 if(new URLSearchParams(window.location.search).get('live')==='1')document.body.classList.add('live-mode');
 function showWheel(){if(popupShown)return;popupShown=true;document.body.classList.add('active');document.getElementById('status').textContent="FINAL MINUTE — the Wheel of Doom is spinning!";}
-function revealPendingChallenge(){if(!pendingChallenge||document.getElementById('challengePopup').hidden===false)return;document.getElementById('challenge').textContent=pendingChallenge;document.getElementById('popupChallenge').textContent=pendingChallenge;document.getElementById('challengePopup').hidden=false;burstFlameConfetti();const result=document.querySelector('.result');result.classList.remove('pop');void result.offsetWidth;result.classList.add('pop');document.getElementById('status').textContent="🔥 FINAL 30 SECONDS — YOUR CHALLENGE STARTS NOW!";}
-function resetBattle(){battleActive=false;popupShown=false;autoSpun=false;pendingChallenge=null;document.getElementById('challengePopup').hidden=true;document.body.classList.remove('active');document.getElementById('challenge').textContent="Waiting for the next battle…";document.getElementById('status').textContent="Battle ended · Waiting for the next TikTok battle.";}
+function revealPendingChallenge(){
+ const popup=document.getElementById('challengePopup');
+ if(!pendingChallenge||!popup||popup.dataset.open==='1')return;
+ document.getElementById('challenge').textContent=pendingChallenge;
+ document.getElementById('popupChallenge').textContent=pendingChallenge;
+ // Move the overlay to the top level and force full-viewport positioning,
+ // so no wheel/container styling can clip or cover it.
+ if(popup.parentElement!==document.body)document.body.appendChild(popup);
+ popup.hidden=false;popup.dataset.open='1';
+ popup.style.setProperty('position','fixed','important');
+ popup.style.setProperty('inset','0','important');
+ popup.style.setProperty('width','100vw','important');
+ popup.style.setProperty('height','100vh','important');
+ popup.style.setProperty('height','100dvh','important');
+ popup.style.setProperty('z-index','2147483647','important');
+ popup.style.setProperty('display','flex','important');
+ popup.style.setProperty('align-items','center','important');
+ popup.style.setProperty('justify-content','center','important');
+ popup.style.setProperty('background','rgba(0,0,0,.995)','important');
+ popup.style.setProperty('padding','2vh 2vw','important');
+ const card=popup.querySelector('.popup-card');
+ card.style.setProperty('width','min(96vw,1100px)','important');
+ card.style.setProperty('height','min(94vh,900px)','important');
+ card.style.setProperty('height','min(94dvh,900px)','important');
+ card.style.setProperty('max-height','96vh','important');
+ card.style.setProperty('max-height','96dvh','important');
+ card.style.setProperty('min-height','0','important');
+ burstFlameConfetti();
+ document.getElementById('status').textContent="🔥 FINAL 30 SECONDS — YOUR CHALLENGE STARTS NOW!";
+}
+function resetBattle(){battleActive=false;popupShown=false;autoSpun=false;pendingChallenge=null;closeResultOverlay();document.body.classList.remove('active');document.getElementById('challenge').textContent="Waiting for the next battle…";document.getElementById('status').textContent="Battle ended · Waiting for the next TikTok battle.";}
 function beginBattle(data){
  const duration=Number(data.battleDuration||data.durationSec||300);
  battleDuration=duration>0?duration:300;battleStartAt=Date.now();battleActive=true;popupShown=false;autoSpun=false;
