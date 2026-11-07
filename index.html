@@ -82,7 +82,7 @@ const challenges=[
 const colors=["#4a100d","#a42b13","#24100e","#76180f","#bd4b16","#32100d","#8c3218","#160b0a"];
 const canvas=document.getElementById('wheel'),ctx=canvas.getContext('2d'),spinBtn=document.getElementById('spin');
 const TAU=Math.PI*2,arc=TAU/challenges.length;
-let rotation=0,spinning=false,lastIndex=-1,chatSocket=null,lastChatSpin=0,battleActive=false,battleDuration=300,battleStartAt=0,popupShown=false,autoSpun=false,lastBattleKey="";
+let rotation=0,spinning=false,lastIndex=-1,chatSocket=null,lastChatSpin=0,battleActive=false,battleDuration=300,battleStartAt=0,popupShown=false,autoSpun=false,lastBattleKey="",pendingChallenge=null;
 function draw(){
  const cx=450,cy=450,r=420;
  ctx.clearRect(0,0,900,900);
@@ -145,7 +145,7 @@ function burstFlameConfetti(){
   layer.appendChild(p);
  }
 }
-function spin(){
+function spin(deferPopup=false){
  if(spinning)return;
  spinning=true;spinBtn.disabled=true;document.getElementById('status').textContent="The wheel is spinning…";
  let index;do{index=Math.floor(Math.random()*challenges.length)}while(index===lastIndex);
@@ -155,14 +155,15 @@ function spin(){
  const target=((-(index+.5)*arc-current)%TAU+TAU)%TAU;
  const extra=TAU*(5+Math.floor(Math.random()*3));
  const from=rotation,to=rotation+extra+target,duration=5200,start=performance.now();
- function frame(now){const t=Math.min(1,(now-start)/duration),ease=1-Math.pow(1-t,4);rotation=from+(to-from)*ease;draw();if(t<1)requestAnimationFrame(frame);else{rotation=((to%TAU)+TAU)%TAU;draw();document.getElementById('challenge').textContent=challenges[index];document.getElementById('popupChallenge').textContent=challenges[index];document.getElementById('challengePopup').hidden=false;burstFlameConfetti();const result=document.querySelector('.result');result.classList.remove('pop');void result.offsetWidth;result.classList.add('pop');document.getElementById('status').textContent="🎉 Challenge selected · Good luck!";spinning=false;spinBtn.disabled=false}}
+ function frame(now){const t=Math.min(1,(now-start)/duration),ease=1-Math.pow(1-t,4);rotation=from+(to-from)*ease;draw();if(t<1)requestAnimationFrame(frame);else{rotation=((to%TAU)+TAU)%TAU;draw();pendingChallenge=challenges[index];document.getElementById('challenge').textContent=pendingChallenge;document.getElementById('popupChallenge').textContent=pendingChallenge;if(!deferPopup)revealPendingChallenge();document.getElementById('status').textContent=deferPopup?"Challenge chosen · Starts with 30 seconds remaining.":"🎉 Challenge selected · Good luck!";spinning=false;spinBtn.disabled=false}}
  requestAnimationFrame(frame);
 }
 spinBtn.addEventListener('click',spin);document.getElementById('closePopup').addEventListener('click',()=>{document.getElementById('challengePopup').hidden=true});document.getElementById('challengePopup').addEventListener('click',e=>{if(e.target.id==='challengePopup')e.currentTarget.hidden=true});draw();
 // Normal link opens as a visible preview; add ?live=1 for the hidden-until-battle LIVE overlay.
 if(new URLSearchParams(window.location.search).get('live')==='1')document.body.classList.add('live-mode');
-function showWheel(){if(popupShown)return;popupShown=true;document.body.classList.add('active');document.getElementById('status').textContent="The battle challenge is live!";}
-function resetBattle(){battleActive=false;popupShown=false;autoSpun=false;document.body.classList.remove('active');document.getElementById('challenge').textContent="Waiting for the next battle…";document.getElementById('status').textContent="Battle ended · Waiting for the next TikTok battle.";}
+function showWheel(){if(popupShown)return;popupShown=true;document.body.classList.add('active');document.getElementById('status').textContent="FINAL MINUTE — the Wheel of Doom is spinning!";}
+function revealPendingChallenge(){if(!pendingChallenge||document.getElementById('challengePopup').hidden===false)return;document.getElementById('challenge').textContent=pendingChallenge;document.getElementById('popupChallenge').textContent=pendingChallenge;document.getElementById('challengePopup').hidden=false;burstFlameConfetti();const result=document.querySelector('.result');result.classList.remove('pop');void result.offsetWidth;result.classList.add('pop');document.getElementById('status').textContent="🔥 FINAL 30 SECONDS — YOUR CHALLENGE STARTS NOW!";}
+function resetBattle(){battleActive=false;popupShown=false;autoSpun=false;pendingChallenge=null;document.getElementById('challengePopup').hidden=true;document.body.classList.remove('active');document.getElementById('challenge').textContent="Waiting for the next battle…";document.getElementById('status').textContent="Battle ended · Waiting for the next TikTok battle.";}
 function beginBattle(data){
  const duration=Number(data.battleDuration||data.durationSec||300);
  battleDuration=duration>0?duration:300;battleStartAt=Date.now();battleActive=true;popupShown=false;autoSpun=false;
@@ -174,8 +175,8 @@ function updateBattleClock(data){
  const remaining=Number(data.secsRemaining);
  if(Number.isFinite(remaining)){
   const elapsed=Math.max(0,battleDuration-remaining);
-  if(remaining<=60&&remaining>=0)showWheel();
-  if(remaining<=30&&remaining>=0&&!autoSpun){showWheel();autoSpun=true;document.getElementById('status').textContent="FINAL 30 SECONDS — your challenge is being chosen!";spin();}
+  if(remaining<=60&&remaining>30&&!autoSpun){showWheel();autoSpun=true;spin(true);}
+  if(remaining<=30&&remaining>=0)revealPendingChallenge();
   if(remaining<=0)resetBattle();
  }
 }
@@ -193,8 +194,8 @@ function tickBattle(){
  if(!battleActive)return;
  const elapsed=(Date.now()-battleStartAt)/1000;
  const remaining=battleDuration-elapsed;
- if(remaining<=60&&remaining>=0)showWheel();
- if(remaining<=30&&remaining>=0&&!autoSpun){showWheel();autoSpun=true;document.getElementById('status').textContent="FINAL 30 SECONDS — your challenge is being chosen!";spin();}
+ if(remaining<=60&&remaining>30&&!autoSpun){showWheel();autoSpun=true;spin(true);}
+ if(remaining<=30&&remaining>=0)revealPendingChallenge();
  if(remaining<=0){resetBattle();lastBattleKey=""}
 }
 setInterval(tickBattle,500);
